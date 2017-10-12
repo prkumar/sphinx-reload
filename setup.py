@@ -22,7 +22,7 @@ metadata = dict({
     ],
     "keywords": "sphinx livereload documentation",
     "install_requires": [
-        "livereload == 2.5.1",
+        "livereload >= 2.5.1",
     ],
 })
 
