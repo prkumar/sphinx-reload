@@ -8,7 +8,6 @@ TODO:
 import argparse
 import glob
 import os
-import tempfile
 
 # Third-party imports
 import livereload
@@ -22,17 +21,18 @@ class _RecursiveGlobWatcher(livereload.watcher.Watcher):
 
 
 class _SphinxResourceFactory(object):
-    _MAKE_CMD_TEMPLATE = "make html BUILDDIR=%s"
+    _MAKE_CMD = "make html"
+    _SPHINX_BUILD_CMD_TEMPLATE = "sphinx-build %s %s"
+    _DEFAULT_BUILD_DIRECTORY = "_build"
 
     @staticmethod
     def get_documentation_root(makefile_path):
         if os.path.isfile(makefile_path):
-            return os.path.dirname(makefile_path)
-        else:
-            return makefile_path
+            makefile_path = os.path.dirname(makefile_path)
+        return makefile_path
 
     @staticmethod
-    def get_source_directory(doc_root):
+    def estimate_source_directory(doc_root):
         if os.path.isfile(os.path.join(doc_root, "source", "conf.py")):
             return os.path.join(doc_root, "source")
         elif os.path.isfile(os.path.join(doc_root, "conf.py")):
@@ -43,48 +43,63 @@ class _SphinxResourceFactory(object):
                 "path '%s'" % doc_root
             )
 
+    def get_build_directory(self, doc_root):
+        return os.path.join(doc_root, self._DEFAULT_BUILD_DIRECTORY)
+
     def get_make_command(self, build_directory):
-        return self._MAKE_CMD_TEMPLATE % build_directory
+        make_cmd = self._MAKE_CMD
+        if build_directory is not None:
+            make_cmd += " BUILDDIR=%s" % build_directory
+        return make_cmd
+
+    def get_sphinx_build_command(self, source_directory, build_directory):
+        return self._SPHINX_BUILD_CMD_TEMPLATE % (
+            source_directory, build_directory
+        )
 
     @staticmethod
-    def get_html_directory(build_dir):
-        return os.path.join(build_dir, "html")
+    def get_html_directory(build_directory):
+        return os.path.join(build_directory, "html")
 
 
 class SphinxReload(object):
+
     def __init__(self):
         self._spy_on = []
-
-    @staticmethod
-    def _get_build_directory(build_dir):
-        if build_dir is None:
-            return tempfile.mkdtemp()
-        else:
-            return os.path.abspath(build_dir)
+        self._sphinx = _SphinxResourceFactory()
 
     def watch(self, *glob_names):
         self._spy_on.extend(glob_names)
 
-    def run(self, doc_root, build_dir=None, port=5500, watch_source=False):
-        # Set up sphinx resources
-        sphinx = _SphinxResourceFactory()
-        doc_root = sphinx.get_documentation_root(doc_root)
-        build_dir = self._get_build_directory(build_dir)
-        make_cmd = sphinx.get_make_command(build_dir)
-        html_dir = sphinx.get_html_directory(build_dir)
-
-        spy_on = self._spy_on
-        if watch_source:
-            # Spy on changes in source directory.
-            spy_on += [sphinx.get_source_directory(doc_root)]
-
-        # Set up live preview server
+    def _run(self, build_func, root, port):
         server = livereload.Server(watcher=_RecursiveGlobWatcher())
-        shell = livereload.shell(make_cmd, cwd=doc_root)
-        shell()  # Do an initial build.
-        for pattern in spy_on:
-            server.watch(pattern, shell)
-        server.serve(root=html_dir, port=port)
+        for pattern in self._spy_on:
+            server.watch(pattern, build_func)
+        build_func()  # Do an initial build.
+        server.serve(
+            root=root,
+            port=port,
+            open_url_delay=2,
+            restart_delay=0.3,
+        )
+
+    def run(self, doc_root, build_dir=None, port=5500, use_makefile=True):
+        # Set up sphinx resources
+        doc_root = self._sphinx.get_documentation_root(doc_root)
+        doc_root = os.path.abspath(doc_root)
+        if build_dir is None:
+            build_dir = self._sphinx.get_build_directory(doc_root)
+        html_dir = self._sphinx.get_html_directory(build_dir)
+
+        if use_makefile:
+            build_cmd = self._sphinx.get_make_command(build_dir)
+        else:
+            source_dir = self._sphinx.estimate_source_directory(doc_root)
+            build_cmd = self._sphinx.get_sphinx_build_command(
+                source_dir, build_dir
+            )
+        build_func = livereload.shell(build_cmd, cwd=doc_root)
+        self._run(build_func, html_dir, port=port)
 
 
 def _create_parser():
@@ -95,10 +110,9 @@ def _create_parser():
              "`sphinx-build` put the Makefile)."
     )
     parser.add_argument(
-        "-b",
         "--build-dir",
-        help="Your documentation's root directory (i.e., the place where "
-             "`sphinx-build` put the Makefile)."
+        help="The desired build directory.",
+        default=None
     )
     parser.add_argument(
         "--watch",
@@ -123,11 +137,18 @@ def main():
     namespace = parser.parse_args()
     reload = SphinxReload()
     reload.watch(*namespace.watch)
+
+    if namespace.watch:
+        reload.watch(*namespace.watch)
+    else:
+        sphinx = _SphinxResourceFactory()
+        src = sphinx.estimate_source_directory(namespace.documentation_root)
+        reload.watch(os.path.abspath(src))
+
     reload.run(
         namespace.documentation_root,
-        namespace.build_dir,
+        build_dir=namespace.build_dir,
         port=namespace.port,
-        watch_source=bool(namespace.watch)
     )
 
 
