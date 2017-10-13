@@ -7,8 +7,8 @@ Sphinx Reload
 Installation
 ============
 
-To install, simply use `pip`:
+To install, you can use ``pip`` (or ``easy_install`):
 
-```
-pip install sphinx-reload
-```
+::
+
+    pip install sphinx-reload
