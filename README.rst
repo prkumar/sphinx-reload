@@ -1,6 +1,8 @@
 Sphinx-Reload
 *************
 
+|PyPI Version| |Build Status|
+
 .. image:: demo.gif
 
 
@@ -44,3 +46,8 @@ To view further usage details, use the script's ``--help`` option:
 ::
 
     $ sphinx-reload --help
+
+.. |Build Status| image:: https://travis-ci.org/prkumar/sphinx-reload.svg?branch=master
+   :target: https://travis-ci.org/prkumar/sphinx-reload
+.. |PyPI Version| image:: https://img.shields.io/pypi/v/sphinx-reload.svg
+   :target: https://pypi.python.org/pypi/sphinx-reload
