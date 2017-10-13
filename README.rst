@@ -33,9 +33,9 @@ directory and named ``docs``:
 
     $ sphinx-reload docs/
 
-``sphinx-reload`` will open your documentation preview in a new tab of your
-favorite browser and reload the table whenever it notices a change to
-your documentation's source files (e.g., any `reStructuredText
+``sphinx-reload`` will open a preview in a new tab of your favorite browser
+and watch for changes in your documentation's source
+files (e.g., any `reStructuredText
 <http://docutils.sourceforge.net/rst.html>`__ files under the documentation's
 root).
 

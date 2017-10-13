@@ -8,10 +8,13 @@ TODO:
 import argparse
 import glob
 import os
+import sys
 
 # Third-party imports
 import livereload
 import livereload.watcher
+
+__version__ = "0.1.0"
 
 
 class _RecursiveGlobWatcher(livereload.watcher.Watcher):
@@ -72,7 +75,8 @@ class SphinxReload(object):
         self._spy_on.extend(glob_names)
 
     def _run(self, build_func, root, port):
-        server = livereload.Server(watcher=_RecursiveGlobWatcher())
+        watcher = _RecursiveGlobWatcher if sys.version_info >= (3, 5) else None
+        server = livereload.Server(watcher=watcher)
         for pattern in self._spy_on:
             server.watch(pattern, build_func)
         build_func()  # Do an initial build.
@@ -104,6 +108,11 @@ class SphinxReload(object):
 
 def _create_parser():
     parser = argparse.ArgumentParser(prog="sphinx-reload")
+    parser.add_argument(
+        '--version',
+        action='version',
+        version='v%s' % __version__
+    )
     parser.add_argument(
         "documentation_root",
         help="Your documentation's root directory (i.e., the place where "

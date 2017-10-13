@@ -1,6 +1,9 @@
 # Standard library imports
 from setuptools import setup, find_packages
 
+# Local imports
+import sphinx_reload
+
 
 def read(filename):
     with open(filename) as stream:
@@ -11,7 +14,7 @@ metadata = dict({
     "name": "sphinx-reload",
     "author": "P. Raj Kumar",
     "author_email": "raj.pritvi.kumar@gmail.com",
-    "version": "0.1.0",
+    "version": sphinx_reload.__version__,
     "url": "https://github.com/prkumar/sphinx-reload",
     "license": "MIT",
     "description": "Sphinx Documentation Live.",
@@ -21,8 +24,14 @@ metadata = dict({
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
-        # TODO: Verify that script works on other Python versions.
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7"
         "Topic :: Software Development :: Documentation"
     ],
     "keywords": "sphinx live preview sync reload documentation",
