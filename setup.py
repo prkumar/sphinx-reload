@@ -17,7 +17,7 @@ metadata = dict({
     "version": sphinx_reload.__version__,
     "url": "https://github.com/prkumar/sphinx-reload",
     "license": "MIT",
-    "description": "Sphinx Documentation Live.",
+    "description": "Live preview your Sphinx documentation",
     "long_description": read("README.rst"),
     "classifiers": [
         "Development Status :: 2 - Pre-Alpha",
