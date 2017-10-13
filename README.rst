@@ -7,7 +7,7 @@ Sphinx Reload
 Installation
 ============
 
-To install, you can use ``pip`` (or ``easy_install`):
+To install, you can use ``pip`` (or ``easy_install``):
 
 ::
 
