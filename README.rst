@@ -1,4 +1,14 @@
 Sphinx Reload
 *************
 
-Live reload your Sphinx documentation.
+.. image:: demo.gif
+
+
+Installation
+============
+
+To install, simply use `pip`:
+
+```
+pip install sphinx-reload
+```
