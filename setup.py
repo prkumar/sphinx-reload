@@ -1,5 +1,5 @@
 # Standard library imports
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(filename):
@@ -14,16 +14,27 @@ metadata = dict({
     "version": "0.1.0",
     "url": "https://github.com/prkumar/sphinx-reload",
     "license": "MIT",
-    "description": "Live Reload Sphinx Documentation.",
+    "description": "Sphinx Documentation Live.",
     "long_description": read("README.rst"),
     "classifiers": [
         "Development Status :: 2 - Pre-Alpha",
+        "Environment :: Console",
         "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        # TODO: Verify that script works on other Python versions.
+        "Programming Language :: Python :: 3.6",
+        "Topic :: Software Development :: Documentation"
     ],
-    "keywords": "sphinx livereload documentation",
+    "keywords": "sphinx live preview sync reload documentation",
     "install_requires": [
         "livereload >= 2.5.1",
     ],
+    "packages": find_packages(),
+    "entry_points": {
+        "console_scripts": [
+            "sphinx-reload = sphinx_reload:main"
+        ]
+    }
 })
 
 if __name__ == "__main__":
