@@ -1,4 +1,4 @@
-Sphinx Reload
+Sphinx-Reload
 *************
 
 .. image:: demo.gif
