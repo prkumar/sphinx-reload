@@ -31,7 +31,7 @@ metadata = dict({
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7"
+        "Programming Language :: Python :: 3.7",
         "Topic :: Software Development :: Documentation"
     ],
     "keywords": "sphinx live preview sync reload documentation",
