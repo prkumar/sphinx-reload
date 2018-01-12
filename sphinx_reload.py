@@ -74,7 +74,7 @@ class SphinxReload(object):
     def watch(self, *glob_names):
         self._spy_on.extend(glob_names)
 
-    def _run(self, build_func, root, port):
+    def _run(self, build_func, root, port, host):
         watcher = _RecursiveGlobWatcher if sys.version_info >= (3, 5) else None
         server = livereload.Server(watcher=watcher)
         for pattern in self._spy_on:
@@ -85,9 +85,11 @@ class SphinxReload(object):
             port=port,
             open_url_delay=2,
             restart_delay=0.3,
+            host=host
         )
 
-    def run(self, doc_root, build_dir=None, port=5500, use_makefile=True):
+    def run(self, doc_root, build_dir=None, host="localhost", port=5500,
+            use_makefile=True):
         # Set up sphinx resources
         doc_root = self._sphinx.get_documentation_root(doc_root)
         doc_root = os.path.abspath(doc_root)
@@ -103,7 +105,7 @@ class SphinxReload(object):
                 source_dir, build_dir
             )
         build_func = livereload.shell(build_cmd, cwd=doc_root)
-        self._run(build_func, html_dir, port=port)
+        self._run(build_func, html_dir, port=port, host=host)
 
 
 def _create_parser():
@@ -117,6 +119,11 @@ def _create_parser():
         "documentation_root",
         help="Your documentation's root directory (i.e., the place where "
              "`sphinx-build` put the Makefile)."
+    )
+    parser.add_argument(
+        "--host",
+        help="The host to serve files",
+        default="localhost"
     )
     parser.add_argument(
         "--build-dir",
@@ -158,6 +165,7 @@ def main():
         namespace.documentation_root,
         build_dir=namespace.build_dir,
         port=namespace.port,
+        host=namespace.host,
     )
 
 
