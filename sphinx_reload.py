@@ -24,7 +24,7 @@ class _RecursiveGlobWatcher(livereload.watcher.Watcher):
 
 
 class _SphinxResourceFactory(object):
-    _MAKE_CMD = "make html"
+    _MAKE_CMD = "make clean html"
     _SPHINX_BUILD_CMD_TEMPLATE = "sphinx-build %s %s"
     _DEFAULT_BUILD_DIRECTORY = "_build"
 
