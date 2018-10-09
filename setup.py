@@ -39,6 +39,7 @@ metadata = dict({
         "livereload >= 2.5.1",
     ],
     "packages": find_packages(),
+    "py_modules": ["sphinx_reload"],
     "entry_points": {
         "console_scripts": [
             "sphinx-reload = sphinx_reload:main"
