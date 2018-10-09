@@ -14,7 +14,7 @@ import sys
 import livereload
 import livereload.watcher
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 class _RecursiveGlobWatcher(livereload.watcher.Watcher):
