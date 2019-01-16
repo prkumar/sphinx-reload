@@ -75,7 +75,7 @@ class SphinxReload(object):
         self._spy_on.extend(glob_names)
 
     def _run(self, build_func, root, port):
-        watcher = _RecursiveGlobWatcher if sys.version_info >= (3, 5) else None
+        watcher = _RecursiveGlobWatcher() if sys.version_info >= (3, 5) else None
         server = livereload.Server(watcher=watcher)
         for pattern in self._spy_on:
             server.watch(pattern, build_func)
