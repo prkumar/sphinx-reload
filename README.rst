@@ -21,7 +21,7 @@ The package installs the command-line program ``sphinx-reload``:
 ::
 
     $ sphinx-reload --version
-    v0.1.0
+    v0.2.0
 
 Getting Started
 ===============
