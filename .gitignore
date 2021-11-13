@@ -1,22 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @prkumar
- Sign out
- Watch 2,234
-  Star 55,603
- Fork 24,485 github/gitignore
- Code  Pull requests 157  Projects 0  Insights
-Branch: master Find file Copy pathgitignore/Python.gitignore
-2ec038e  21 days ago
-@shiftkey shiftkey Merge pull request #2464 from Cadmus/master
-61 contributors @arcresu @shiftkey @Lucretiel @Harrison-G @jwg4 @Metallicow @misaelnieto @pmsosa @svkampen @vltr @matheussl @hugovk @ghisvail @EvandroLG @DSIW @toanant @2Cubed @weinihou @Visgean @nvie @skuschel @sigo @scari @borntyping @roll @rmax and others
-RawBlameHistory
-105 lines (84 sloc)  1.17 KB
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -121,18 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-© 2017 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
 
 # Jetbrains
 .idea/
