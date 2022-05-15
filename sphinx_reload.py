@@ -152,7 +152,6 @@ def main():
     parser = _create_parser()
     namespace = parser.parse_args()
     reload = SphinxReload()
-    reload.watch(*namespace.watch)
 
     if namespace.watch:
         reload.watch(*namespace.watch)
