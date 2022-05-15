@@ -129,7 +129,7 @@ def _create_parser():
         "--watch",
         metavar="PATTERN",
         default=[],
-        nargs="+",
+        action="append",
         help="File patterns to watch for changes, on which documentation "
              "should be rebuilt and served again."
     )
