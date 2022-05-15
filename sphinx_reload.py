@@ -116,11 +116,6 @@ def _create_parser():
         version='v%s' % __version__
     )
     parser.add_argument(
-        "documentation_root",
-        help="Your documentation's root directory (i.e., the place where "
-             "`sphinx-build` put the Makefile)."
-    )
-    parser.add_argument(
         "--host",
         help="The host to serve files",
         default="localhost"
@@ -144,6 +139,11 @@ def _create_parser():
         default=5500,
         type=int,
         help="The port number from which to serve your documentation."
+    )
+    parser.add_argument(
+        "documentation_root",
+        help="Your documentation's root directory (i.e., the place where "
+             "`sphinx-build` put the Makefile)."
     )
     return parser
 
