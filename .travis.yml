@@ -5,6 +5,7 @@ python:
   - '3.4'
   - '3.5'
   - '3.6'
+  - '3.7'
 script:
   - pip install .
 deploy:
@@ -14,5 +15,5 @@ deploy:
     secure: vZosiQMk80yl4FBgbgg/0S8SuNrI0PfCVNskxpl82E09wtW8gip2wNf+wbcxGqC0GuvBbty5kXyTtLNDWnaW+zmevathz04txsUxL4EPpyl4au6L2jidZcILnpnC4Nn5OYGbHJmtFoOLS4BsKbH9PugJvOgKdkLssGgD/gksVIj2TEihthFAPmnZQCrGzebMfFKT6h9pB5Dt0NntSMmWdF88h4dbogJeI3uEF0XRlno9+Q0Ntz6eM0I3Lw8DxYznfjtxAHGcXrpDkpJhINmORRtadloNrU7lLrMMyTn866AnR9VHWQr5P8KckEQZ/vkt5FC87AtrV2bkuImkrSDrD5+ujQoJxa9a8FMFIhwmpfelgB0aLKhtCnwdjxKFf9kLH6q6nLAhBkol5GoFWfbfXPrvg6zicXnQ11nNbOMNn1K7PVfeDTF0Sq9lyoZHViX8EuP+DBo8dY2cbd3dvTpPy9242bODwdr4kstN0yzIuNBAxw2PXihBWKIQNNqjxRAnbAPn/DiC6XEYaTysht12JV71NdaHdN6gb5P0sAOaHExgWLfBBcWHwktzt5tVbyax+bP1R30xenZ5+cEsR2GvHYFjmGt5tr7WEXm49MCWxNa5hijy5y/XdE3+daSrlKyvSchi4QoiF7XWhOklV/YA3e1KipZxqzhv1IZ0Zv9omE8=
   on:
     tags: true
-    python: '3.6'
+    python: '3.7'
   distributions: "sdist bdist_wheel"
