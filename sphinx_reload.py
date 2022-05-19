@@ -116,11 +116,6 @@ def _create_parser():
         version='v%s' % __version__
     )
     parser.add_argument(
-        "documentation_root",
-        help="Your documentation's root directory (i.e., the place where "
-             "`sphinx-build` put the Makefile)."
-    )
-    parser.add_argument(
         "--host",
         help="The host to serve files",
         default="localhost"
@@ -134,7 +129,7 @@ def _create_parser():
         "--watch",
         metavar="PATTERN",
         default=[],
-        nargs="+",
+        action="append",
         help="File patterns to watch for changes, on which documentation "
              "should be rebuilt and served again."
     )
@@ -145,6 +140,11 @@ def _create_parser():
         type=int,
         help="The port number from which to serve your documentation."
     )
+    parser.add_argument(
+        "documentation_root",
+        help="Your documentation's root directory (i.e., the place where "
+             "`sphinx-build` put the Makefile)."
+    )
     return parser
 
 
@@ -152,7 +152,6 @@ def main():
     parser = _create_parser()
     namespace = parser.parse_args()
     reload = SphinxReload()
-    reload.watch(*namespace.watch)
 
     if namespace.watch:
         reload.watch(*namespace.watch)
