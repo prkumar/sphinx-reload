@@ -1,8 +1,13 @@
 # Standard library imports
 from setuptools import setup, find_packages
+import os
 
 # Local imports
-import sphinx_reload
+with open(os.path.join(os.path.dirname(__file__), "sphinx_reload.py"), "r") as f:
+    for line in f:
+        if "__version__ = " in line:
+            __version__ = eval(line.split("=")[1].strip())
+            break
 
 
 def read(filename):
@@ -14,7 +19,7 @@ metadata = dict({
     "name": "sphinx-reload",
     "author": "P. Raj Kumar",
     "author_email": "raj.pritvi.kumar@gmail.com",
-    "version": sphinx_reload.__version__,
+    "version": __version__,
     "url": "https://github.com/prkumar/sphinx-reload",
     "license": "MIT",
     "description": "Live preview your Sphinx documentation",
