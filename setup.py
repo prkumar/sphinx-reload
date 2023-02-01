@@ -8,6 +8,8 @@ with open(os.path.join(os.path.dirname(__file__), "sphinx_reload.py"), "r") as f
         if "__version__ = " in line:
             __version__ = eval(line.split("=")[1].strip())
             break
+    else:
+        raise RuntimeError("No `__version__` found in `sphinx_reload.py`.")
 
 
 def read(filename):
